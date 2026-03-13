@@ -3,9 +3,9 @@ FROM python:3.11-slim as builder
 WORKDIR /app
 
 # Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libpq-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends \\
+    gcc \\
+    libpq-dev \\
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
@@ -18,8 +18,8 @@ FROM python:3.11-slim as runner
 WORKDIR /app
 
 # Install runtime dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq5 \
+RUN apt-get update && apt-get install -y --no-install-recommends \\
+    libpq5 \\
     && rm -rf /var/lib/apt/lists/*
 
 # Copy installed packages from builder
