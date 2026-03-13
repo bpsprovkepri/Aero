@@ -1,37 +1,25 @@
-# Runtime stage
-FROM python:3.11-slim as runner
+FROM mcr.microsoft.com/playwright/python:v1.48.0-jammy
 
 WORKDIR /app
 
-# Install runtime + Playwright system deps
+# Install build deps for psycopg2/etc.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libpq5 \
-    libnss3 \
-    libatk-bridge2.0-0 \
-    libdrm2 \
-    libxkbcommon0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxrandr2 \
-    libgbm1 \
-    libasound2 \
-    fonts-liberation \
-    libu2f-udev \
+    gcc \
+    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy installed packages from builder
-COPY --from=builder /root/.local /root/.local
+# Install python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Set PATH BEFORE running playwright install
-ENV PATH=/root/.local/bin:$PATH
+# Runtime deps (already mostly in base, but ensure)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy app code
 COPY . .
 
-# Now playwright binary is on PATH — install browser
-RUN playwright install chromium
-
-# Environment variables
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
