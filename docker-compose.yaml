@@ -37,6 +37,9 @@ services:
       args:
         NEXT_PUBLIC_API_URL: http://${VPS_IP}:8098
     container_name: aero-client
+    environment:
+        HOSTNAME: "0.0.0.0"
+        PORT: "3000"
     ports:
       - "8097:3000"
     depends_on:
