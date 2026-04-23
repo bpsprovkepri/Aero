@@ -53,8 +53,9 @@ def login(req: LoginRequest, response: Response, db: Session = Depends(get_db)):
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=False,  # Set True in production (HTTPS)
-        samesite="lax",
+        secure=True,           # required for HTTPS
+        samesite="none",       # required for cross-origin (different subdomain)
+        domain=".gurind.am",   # leading dot = shared across all subdomains
         max_age=max_age,
         path="/",
     )
