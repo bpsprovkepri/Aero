@@ -64,9 +64,15 @@ import os
 
 # CORS — allow localhost + VPS IP
 _vps_ip = os.getenv("VPS_IP", "")
-_allowed_origins = ["http://localhost:3000"]
+_allowed_origins = [
+    "http://localhost:3000",
+    "http://localhost:8097",
+    "https://aero.gurind.am",  # ✅ production domain
+]
+
 if _vps_ip:
     _allowed_origins.append(f"http://{_vps_ip}:3000")
+    _allowed_origins.append(f"http://{_vps_ip}:8097")
 
 app.add_middleware(
     CORSMiddleware,
