@@ -35,7 +35,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://${VPS_IP:-localhost}:8098
+        NEXT_PUBLIC_API_URL: http://${VPS_IP}:8098
     container_name: aero-client
     ports:
       - "8097:3000"
