@@ -35,7 +35,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://aero-backend:8000
+        NEXT_PUBLIC_API_URL: ""
     container_name: aero-client
     environment:
         HOSTNAME: "0.0.0.0"
