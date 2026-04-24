@@ -15,7 +15,7 @@ class ScrapeRun(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     run_id = Column(String(50), unique=True, nullable=False)        # UUID
     run_type = Column(String(10), default="MANUAL")                 # SCHEDULED / MANUAL
-    scraped_at = Column(DateTime, server_default=func.now())        # timestamp pengambilan
+    scraped_at = Column(DateTime(timezone=True), server_default=func.now())        # timestamp pengambilan, ✅ timezone=True
     scrape_date = Column(Date, nullable=False)                      # tanggal pengamatan (dimensi)
     route = Column(String(10), nullable=False)                      # "BTH-CGK"
     status = Column(String(10), default="RUNNING")                  # RUNNING / COMPLETED / FAILED
