@@ -120,7 +120,15 @@ def logout(
             exp = datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
             blacklist_token(db, payload["jti"], exp)
 
-    response.delete_cookie(key="refresh_token", path="/")
+    # Match ALL attributes used in set_cookie
+    response.delete_cookie(
+        key="refresh_token",
+        path="/",
+        domain=".gurind.am",
+        secure=True,
+        samesite="none",
+    )
+    
     return {"message": "Berhasil logout"}
 
 
